@@ -1,0 +1,28 @@
+{
+  "name": "kata-09",
+  "version": "1.0.0",
+  "description": "Solution to Kata09 challenge",
+  "main": "checkout.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NotRayhaan/kata-09.git"
+  },
+  "author": "Rayhaan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NotRayhaan/kata-09/issues"
+  },
+  "homepage": "https://github.com/NotRayhaan/kata-09#readme",
+  "devDependencies": {
+    "@babel/core": "^7.25.7",
+    "@babel/preset-env": "^7.25.7",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0"
+  }
+}
