@@ -1,4 +1,4 @@
-import { Checkout } from "../checkout";
+import { Checkout, rules } from "../checkout";
 
 const rules1 = {
   A: ["50", "3 for 130"],
@@ -12,18 +12,25 @@ const rules2 = {
   C: ["100"],
   D: ["10"],
 };
-
 const data1 = { id: "1", rules: rules1 };
 const data2 = { id: "2", rules: rules1 };
 
-const price = (goods: string) => {
-  // run checkout
-  const co = new Checkout(data1);
+interface data {
+  id: string;
+  rules: rules;
+}
+const init = (goods: string) => (data: data) => {
+  const co = new Checkout(data);
   goods.split("").forEach((good) => {
     co.scan(good);
   });
   return co.total();
 };
+const initData1 = (goods: string) => init(goods)(data1);
+const initData2 = (goods: string) => init(goods)(data2);
+
+const price = (goods: string) => initData1(goods);
+const price2 = (goods: string) => initData2(goods);
 
 test("single price", () => {
   expect(price("")).toBe(0);
