@@ -17,7 +17,6 @@ interface inventory {
 
 export class Checkout {
   _inventory = {} as inventory;
-
   constructor(rules: RulesData) {
     const transformer = new TransformerFactory(rules.id).getTransformer();
 
@@ -34,15 +33,33 @@ export class Checkout {
 
   scan(item: string) {
     const inventoryItem = Object.keys(this._inventory).find((e) => e === item);
+    const groupItems = Object.keys(this._inventory).filter(
+      (sku) => sku.length > 1
+    );
     if (inventoryItem) {
       this._inventory[inventoryItem].quantity++;
+    }
+
+    // take away quantity from respective SKU, add to group SKU
+    groupItems.forEach((group) => {
+      // if (
+      // group.split("").forEach((item) => this._inventory[item].quantity > 0)
+      // ) {
+      // }
+    });
+    if (groupItems.includes(inventoryItem)) {
+      this._inventory[inventoryItem].quantity--;
+      // this._inventory[inventoryItem].quantity--;
+      // this._inventory[groupItems.find()].quantity++;
+    } else {
     }
   }
 
   total() {
     let total = 0;
-    console.log(Object.values(this._inventory).map((e) => e.rules));
+    // console.log(Object.values(this._inventory).map((e) => e.rules));
 
+    // could also maybe be pulled out?
     Object.values(this._inventory).forEach((item) => {
       if (item.quantity === 0) return;
       let quantity = item.quantity;
@@ -52,18 +69,17 @@ export class Checkout {
         }
         if (parseInt(count) === 1 && quantity > 0) {
           total += quantity * parseInt(modifier);
-        } else if (item.quantity / parseInt(count) > 0) {
-          total +=
-            parseInt(modifier) * Math.floor(item.quantity / parseInt(count));
+        } else if (quantity / parseInt(count) > 0) {
+          total += parseInt(modifier) * Math.floor(quantity / parseInt(count));
           quantity -=
             parseInt(count) * Math.floor(item.quantity / parseInt(count));
         }
-        console.log(
-          `total=${total} modifier=${modifier} maths=${
-            item.quantity / parseInt(count)
-          }`
-        );
-        console.log(`quantity=${quantity} count=${count}`);
+        // console.log(
+        //   `total=${total} modifier=${modifier} maths=${
+        //     item.quantity / parseInt(count)
+        //   }`
+        // );
+        // console.log(`quantity=${quantity} count=${count}`);
       });
     });
     return total;

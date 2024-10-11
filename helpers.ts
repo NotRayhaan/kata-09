@@ -53,3 +53,15 @@ class WooliesTransformer extends Transformer {
     return ["1", split[0]];
   }
 }
+
+class BluebirdTransformer extends Transformer {
+  transformRule(rule: string): rule {
+    const split = rule.split(" ");
+    if (split.length > 1) {
+      // discount
+      return [split[1], split[3]];
+    }
+    // individual price
+    return ["1", split[0]];
+  }
+}
